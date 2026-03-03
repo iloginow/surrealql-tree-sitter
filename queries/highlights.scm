@@ -1,6 +1,7 @@
 [
   (keyword_computed)
   (keyword_reference)
+  (keyword_end)
 ] @keyword
 
 [
@@ -21,6 +22,9 @@
 
 (reference_on_delete_clause
   (keyword_then) @keyword.control)
+
+(assert_clause
+  (keyword_assert) @keyword)
 
 (function_call
   (builtin_function_name) @function.builtin)

@@ -263,6 +263,10 @@
       "required": true,
       "types": [
         {
+          "type": "block",
+          "named": true
+        },
+        {
           "type": "keyword_assert",
           "named": true
         },
@@ -743,6 +747,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "block",
+          "named": true
+        },
         {
           "type": "keyword_always",
           "named": true
@@ -1913,6 +1921,56 @@
     }
   },
   {
+    "type": "else_if_then_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "if_then_result",
+          "named": true
+        },
+        {
+          "type": "keyword_else",
+          "named": true
+        },
+        {
+          "type": "keyword_if",
+          "named": true
+        },
+        {
+          "type": "keyword_then",
+          "named": true
+        },
+        {
+          "type": "value",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "else_then_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "if_then_result",
+          "named": true
+        },
+        {
+          "type": "keyword_else",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "explain_clause",
     "named": true,
     "fields": {},
@@ -2447,7 +2505,54 @@
           "named": true
         },
         {
+          "type": "else_if_then_clause",
+          "named": true
+        },
+        {
+          "type": "else_then_clause",
+          "named": true
+        },
+        {
+          "type": "if_then_result",
+          "named": true
+        },
+        {
+          "type": "keyword_end",
+          "named": true
+        },
+        {
           "type": "keyword_if",
+          "named": true
+        },
+        {
+          "type": "keyword_then",
+          "named": true
+        },
+        {
+          "type": "value",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "if_then_result",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "return_clause",
+          "named": true
+        },
+        {
+          "type": "throw_statement",
           "named": true
         },
         {
@@ -5751,6 +5856,10 @@
   },
   {
     "type": "keyword_else",
+    "named": true
+  },
+  {
+    "type": "keyword_end",
     "named": true
   },
   {

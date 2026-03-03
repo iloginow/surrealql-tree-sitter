@@ -3,6 +3,13 @@ export default grammar({
 
 	extras: ($) => [$.comment, /\s\n/, /\s/],
 
+	conflicts: ($) => [
+		[$.block, $.object],
+		[$.base_value, $.record_id_value],
+		[$.number, $.record_id_value],
+		[$.record_id_value, $.range],
+	],
+
 	rules: {
 		source_file: ($) => choice($.expressions, $.where_clause),
 
@@ -32,6 +39,7 @@ export default grammar({
 		keyword_let: (_) => make_keyword('LET'),
 		keyword_return: (_) => make_keyword('RETURN'),
 		keyword_else: (_) => make_keyword('ELSE'),
+		keyword_end: (_) => make_keyword('END'),
 		keyword_select: (_) => make_keyword('SELECT'),
 		keyword_from: (_) => make_keyword('FROM'),
 		keyword_only: (_) => make_keyword('ONLY'),
@@ -309,18 +317,43 @@ export default grammar({
 		throw_statement: ($) => seq($.keyword_throw, $.value),
 
 		if_statement: ($) =>
-			seq(
-				$.keyword_if,
-				$.value,
-				$.block,
-				repeat($.else_if_clause),
-				optional($.else_clause),
-			),
+			prec.right(choice(
+				seq(
+					$.keyword_if,
+					$.value,
+					$.block,
+					repeat($.else_if_clause),
+					optional($.else_clause),
+				),
+				seq(
+					$.keyword_if,
+					$.value,
+					$.keyword_then,
+					$.if_then_result,
+					repeat($.else_if_then_clause),
+					optional($.else_then_clause),
+					$.keyword_end,
+				),
+			)),
 
 		else_if_clause: ($) =>
 			seq($.keyword_else, $.keyword_if, $.value, $.block),
 
 		else_clause: ($) => seq($.keyword_else, $.block),
+
+		else_if_then_clause: ($) =>
+			seq(
+				$.keyword_else,
+				$.keyword_if,
+				$.value,
+				$.keyword_then,
+				$.if_then_result,
+			),
+
+		else_then_clause: ($) => seq($.keyword_else, $.if_then_result),
+
+		if_then_result: ($) =>
+			choice($.return_clause, $.throw_statement, $.block, $.value),
 
 		let_statement: ($) =>
 			seq(
@@ -1081,7 +1114,7 @@ export default grammar({
 			seq(optional($.keyword_flexible), $.keyword_type, $.type),
 
 		default_clause: ($) =>
-			seq($.keyword_default, optional($.keyword_always), $.value),
+			seq($.keyword_default, optional($.keyword_always), choice($.block, $.value)),
 
 		computed_clause: ($) => seq($.keyword_computed, $.value),
 		reference_clause: ($) =>
@@ -1103,7 +1136,7 @@ export default grammar({
 
 		value_clause: ($) => seq($.keyword_value, $.value),
 
-		assert_clause: ($) => seq($.keyword_assert, $.value),
+		assert_clause: ($) => seq($.keyword_assert, choice($.block, $.value)),
 
 		permissions_for_clause: ($) =>
 			seq(
