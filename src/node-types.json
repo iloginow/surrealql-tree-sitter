@@ -288,6 +288,10 @@
         {
           "type": "keyword_then",
           "named": true
+        },
+        {
+          "type": "scripting_function",
+          "named": true
         }
       ]
     }
@@ -5977,6 +5981,10 @@
         },
         {
           "type": "keyword_when",
+          "named": true
+        },
+        {
+          "type": "scripting_function",
           "named": true
         },
         {

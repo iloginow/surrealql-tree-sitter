@@ -1235,7 +1235,7 @@ export default grammar({
 			seq(
 				optional(seq($.keyword_when, $.value)),
 				optional($.keyword_then),
-				commaSeparated(choice($.sub_query, $.block)),
+				commaSeparated(choice($.sub_query, $.block, $.scripting_function)),
 			),
 
 		api_for_clause: ($) => seq($.keyword_for, commaSeparated($.api_method)),
@@ -1255,7 +1255,7 @@ export default grammar({
 				commaSeparated(choice($.function_call, $.path)),
 			),
 
-		api_then_clause: ($) => seq($.keyword_then, $.block),
+		api_then_clause: ($) => seq($.keyword_then, choice($.block, $.scripting_function)),
 
 		bucket_backend_clause: ($) =>
 			seq(

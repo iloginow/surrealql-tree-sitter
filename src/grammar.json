@@ -6845,6 +6845,10 @@
                 {
                   "type": "SYMBOL",
                   "name": "block"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "scripting_function"
                 }
               ]
             },
@@ -6867,6 +6871,10 @@
                       {
                         "type": "SYMBOL",
                         "name": "block"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "scripting_function"
                       }
                     ]
                   }
@@ -6996,8 +7004,17 @@
           "name": "keyword_then"
         },
         {
-          "type": "SYMBOL",
-          "name": "block"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "block"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "scripting_function"
+            }
+          ]
         }
       ]
     },
