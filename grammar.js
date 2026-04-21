@@ -1,6 +1,8 @@
 export default grammar({
 	name: 'surrealql',
 
+	externals: ($) => [$.js_function_body],
+
 	extras: ($) => [$.comment, /\s\n/, /\s/],
 
 	word: ($) => $._word,
@@ -252,6 +254,13 @@ export default grammar({
 		keyword_auto: (_) => make_keyword('AUTO'),
 		keyword_original: (_) => make_keyword('ORIGINAL'),
 		keyword_sequence: (_) => make_keyword('SEQUENCE'),
+		keyword_all: (_) => make_keyword('ALL'),
+		keyword_async: (_) => token(prec(1, 'async')),
+		keyword_batch: (_) => make_keyword('BATCH'),
+		keyword_expired: (_) => make_keyword('EXPIRED'),
+		keyword_purge: (_) => make_keyword('PURGE'),
+		keyword_revoke: (_) => make_keyword('REVOKE'),
+		keyword_revoked: (_) => make_keyword('REVOKED'),
 
 		// Expressions
 		expressions: ($) =>
@@ -300,6 +309,7 @@ export default grammar({
 				$.relate_statement,
 				$.for_statement,
 				$.show_statement,
+				$.access_statement,
 				$.define_analyzer_statement,
 				$.define_database_statement,
 				$.define_event_statement,
@@ -313,6 +323,7 @@ export default grammar({
 				$.define_api_statement,
 				$.define_module_statement,
 				$.define_bucket_statement,
+				$.define_sequence_statement,
 				$.define_table_statement,
 				$.define_token_statement,
 				$.define_user_statement,
@@ -452,6 +463,17 @@ export default grammar({
 				optional(choice($.if_not_exists_clause, $.keyword_overwrite)),
 				$.identifier,
 				optional($.comment_clause),
+			),
+
+		define_sequence_statement: ($) =>
+			seq(
+				$.keyword_define,
+				$.keyword_sequence,
+				optional(choice($.if_not_exists_clause, $.keyword_overwrite)),
+				$.identifier,
+				optional(seq($.keyword_batch, $.int)),
+				optional(seq($.keyword_start, $.int)),
+				optional($.timeout_clause),
 			),
 
 		define_event_statement: ($) =>
@@ -868,6 +890,11 @@ export default grammar({
 						optional($.if_exists_clause),
 						$.identifier,
 					),
+					seq(
+						$.keyword_sequence,
+						optional($.if_exists_clause),
+						$.identifier,
+					),
 				),
 			),
 
@@ -971,6 +998,46 @@ export default grammar({
 				$.keyword_since,
 				$.value,
 				optional($.limit_clause),
+			),
+
+		access_statement: ($) =>
+			seq(
+				$.keyword_access,
+				$.identifier,
+				optional(seq(
+					$.keyword_on,
+					choice($.keyword_root, $.keyword_namespace, $.keyword_database),
+				)),
+				choice(
+					seq(
+						$.keyword_grant,
+						choice(
+							seq($.keyword_for, $.keyword_user, $.identifier),
+							seq($.keyword_for, $.keyword_record, $.value),
+						),
+					),
+					seq(
+						$.keyword_show,
+						optional(choice(
+							seq($.keyword_grant, $.value),
+							$.keyword_all,
+							$.where_clause,
+						)),
+					),
+					seq(
+						$.keyword_revoke,
+						optional(choice(
+							seq($.keyword_grant, $.value),
+							$.keyword_all,
+							$.where_clause,
+						)),
+					),
+					seq(
+						$.keyword_purge,
+						commaSeparated(choice($.keyword_expired, $.keyword_revoked)),
+						optional(seq($.keyword_for, $.duration)),
+					),
+				),
 			),
 
 		insert_statement: ($) =>
@@ -1526,7 +1593,18 @@ export default grammar({
 				$.object,
 				$.duration,
 				$.point,
+				$.scripting_function,
 			),
+
+		scripting_function: ($) =>
+			prec(2, seq(
+				optional($.keyword_async),
+				$.keyword_function,
+				'(',
+				optional(commaSeparated($.identifier)),
+				')',
+				$.js_function_body,
+			)),
 
 		cast_expression: ($) => prec.left(seq('<', $.type_name, '>', $.value)),
 
@@ -1724,7 +1802,7 @@ export default grammar({
 			token(
 				prec(
 					1,
-					/(array|crypto|duration|encoding|geo|http|math|meta|not|object|parse|rand|record|search|session|sleep|string|time|type|vector)::[a-zA-Z_][a-zA-Z0-9_]*(::[a-zA-Z_][a-zA-Z0-9_]*)?/,
+					/(api|array|bytes|crypto|duration|encoding|file|geo|http|math|meta|not|object|parse|rand|record|search|sequence|session|set|sleep|string|time|type|value|vector)::[a-zA-Z_][a-zA-Z0-9_]*(::[a-zA-Z_][a-zA-Z0-9_]*)?/,
 				),
 			),
 		function_name: (_) =>

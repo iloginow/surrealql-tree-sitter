@@ -43,6 +43,93 @@
     }
   },
   {
+    "type": "access_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "duration",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "keyword_access",
+          "named": true
+        },
+        {
+          "type": "keyword_all",
+          "named": true
+        },
+        {
+          "type": "keyword_database",
+          "named": true
+        },
+        {
+          "type": "keyword_expired",
+          "named": true
+        },
+        {
+          "type": "keyword_for",
+          "named": true
+        },
+        {
+          "type": "keyword_grant",
+          "named": true
+        },
+        {
+          "type": "keyword_namespace",
+          "named": true
+        },
+        {
+          "type": "keyword_on",
+          "named": true
+        },
+        {
+          "type": "keyword_purge",
+          "named": true
+        },
+        {
+          "type": "keyword_record",
+          "named": true
+        },
+        {
+          "type": "keyword_revoke",
+          "named": true
+        },
+        {
+          "type": "keyword_revoked",
+          "named": true
+        },
+        {
+          "type": "keyword_root",
+          "named": true
+        },
+        {
+          "type": "keyword_show",
+          "named": true
+        },
+        {
+          "type": "keyword_user",
+          "named": true
+        },
+        {
+          "type": "value",
+          "named": true
+        },
+        {
+          "type": "where_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "alter_statement",
     "named": true,
     "fields": {},
@@ -344,6 +431,10 @@
         },
         {
           "type": "record_id",
+          "named": true
+        },
+        {
+          "type": "scripting_function",
           "named": true
         },
         {
@@ -1596,6 +1687,53 @@
         },
         {
           "type": "signup_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "define_sequence_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "if_not_exists_clause",
+          "named": true
+        },
+        {
+          "type": "int",
+          "named": true
+        },
+        {
+          "type": "keyword_batch",
+          "named": true
+        },
+        {
+          "type": "keyword_define",
+          "named": true
+        },
+        {
+          "type": "keyword_overwrite",
+          "named": true
+        },
+        {
+          "type": "keyword_sequence",
+          "named": true
+        },
+        {
+          "type": "keyword_start",
+          "named": true
+        },
+        {
+          "type": "timeout_clause",
           "named": true
         }
       ]
@@ -4427,6 +4565,10 @@
           "named": true
         },
         {
+          "type": "keyword_sequence",
+          "named": true
+        },
+        {
           "type": "keyword_table",
           "named": true
         },
@@ -4547,6 +4689,33 @@
       "types": [
         {
           "type": "keyword_root",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "scripting_function",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "js_function_body",
+          "named": true
+        },
+        {
+          "type": "keyword_async",
+          "named": true
+        },
+        {
+          "type": "keyword_function",
           "named": true
         }
       ]
@@ -4905,6 +5074,10 @@
       "required": true,
       "types": [
         {
+          "type": "access_statement",
+          "named": true
+        },
+        {
           "type": "alter_statement",
           "named": true
         },
@@ -4966,6 +5139,10 @@
         },
         {
           "type": "define_scope_statement",
+          "named": true
+        },
+        {
+          "type": "define_sequence_statement",
           "named": true
         },
         {
@@ -6081,6 +6258,10 @@
     "named": true
   },
   {
+    "type": "js_function_body",
+    "named": true
+  },
+  {
     "type": "keyword_access",
     "named": true
   },
@@ -6090,6 +6271,10 @@
   },
   {
     "type": "keyword_algorithm",
+    "named": true
+  },
+  {
+    "type": "keyword_all",
     "named": true
   },
   {
@@ -6137,6 +6322,10 @@
     "named": true
   },
   {
+    "type": "keyword_async",
+    "named": true
+  },
+  {
     "type": "keyword_at",
     "named": true
   },
@@ -6150,6 +6339,10 @@
   },
   {
     "type": "keyword_backend",
+    "named": true
+  },
+  {
+    "type": "keyword_batch",
     "named": true
   },
   {
@@ -6378,6 +6571,10 @@
   },
   {
     "type": "keyword_exists",
+    "named": true
+  },
+  {
+    "type": "keyword_expired",
     "named": true
   },
   {
@@ -6717,6 +6914,10 @@
     "named": true
   },
   {
+    "type": "keyword_purge",
+    "named": true
+  },
+  {
     "type": "keyword_rand",
     "named": true
   },
@@ -6765,6 +6966,14 @@
     "named": true
   },
   {
+    "type": "keyword_revoke",
+    "named": true
+  },
+  {
+    "type": "keyword_revoked",
+    "named": true
+  },
+  {
     "type": "keyword_roles",
     "named": true
   },
@@ -6802,6 +7011,10 @@
   },
   {
     "type": "keyword_select",
+    "named": true
+  },
+  {
+    "type": "keyword_sequence",
     "named": true
   },
   {

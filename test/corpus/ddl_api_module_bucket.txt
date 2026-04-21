@@ -41,7 +41,7 @@ DEFINE API "/test"
           (api_middleware_clause
             (keyword_middleware)
             (function_call
-              (function_name)
+              (builtin_function_name)
               (argument_list
                 (value
                   (base_value
